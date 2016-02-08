@@ -1,7 +1,6 @@
 from colorama import init, Fore
 from requests import get, codes
 from argparse import ArgumentParser
-from sys import maxint
 from json import loads
 from collections import defaultdict
 from urllib import quote
@@ -50,14 +49,13 @@ def find_synonyms(html):
 
 
 def get_arguments():
-    parser = ArgumentParser()
+    parser = ArgumentParser(description="A command line tool for thesaurus.com")
     parser.add_argument('q', help="Query to search for at thesaurus")
-    parser.add_argument('-n', help="Number of results to return", default=maxint)
     args = parser.parse_args()
 
     if args.q is None:
         exit(1)
-    return args.q, args.n
+    return args.q
 
 
 def present_synonyms(synonym_groups):
@@ -73,7 +71,6 @@ def present_synonyms(synonym_groups):
 
 if __name__ == '__main__':
     init()
-    query, num_results = get_arguments()
-    html = search(query)
+    html = search(get_arguments())
     synonym_groups = find_synonyms(html)
     present_synonyms(synonym_groups)
