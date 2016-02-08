@@ -18,3 +18,9 @@ Run setup file and install script:
 To search for synonyms on thesaurus.com run:
 
     $ clisaurus "<query>"
+
+## Missing
+* Pretty exception handling
+* Support for 'Did you mean?'
+* pip integration
+* Possible support for Antonyms
