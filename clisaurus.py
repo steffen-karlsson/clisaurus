@@ -88,19 +88,22 @@ def get_arguments():
     return args.q
 
 
-def present_synonyms(synonym_groups):
+def present_synonyms(synonym_groups, query):
     table = defaultdict(list)
     for sg in sorted(synonym_groups.keys()):
         synonyms = synonym_groups[sg]
         table[sg] = [COLORS[category - 1] + word
                      for category in sorted(synonyms.keys(), reverse=True)
                      for word in sorted(synonyms[category])]
+        table[sg].append(Fore.WHITE + "")
 
-    print tabulate(table, headers="keys")
+    print ">> Results from searching: %s, where the first row denotes the context of where the synonyms are used.\n" % query
+    print tabulate(table, tablefmt="rst", headers="keys")
 
 
 if __name__ == '__main__':
     init()
-    html = search(get_arguments())
+    query = get_arguments()
+    html = search(query)
     synonym_groups = find_synonyms(html)
-    present_synonyms(synonym_groups)
+    present_synonyms(synonym_groups, query)
