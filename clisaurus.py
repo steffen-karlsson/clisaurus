@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 """
 The MIT License (MIT)
 
@@ -21,6 +23,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 """
+
+__author__ = 'Steffen Karlsson'
+__version__ = '0.1-dev'
+__licence__ = 'MIT'
 
 from colorama import init, Fore
 from requests import get, codes
