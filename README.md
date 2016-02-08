@@ -1,5 +1,5 @@
 # clisaurus
-An unofficial commandline tool for thesaurus.com
+An unofficial command line tool for thesaurus.com
 
 ![alt text](https://github.com/steffenkarlsson/clisaurus/blob/master/example.png "Example of a clisaurus request and response")
 
