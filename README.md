@@ -20,6 +20,7 @@ To search for synonyms on thesaurus.com run:
     $ clisaurus "<query>"
 
 ## Missing
+* No results crash
 * Pretty exception handling
 * Support for 'Did you mean?'
 * pip integration
