@@ -46,19 +46,36 @@ class NoResultException(Exception):
     pass
 
 
+class MisspelledQueryException(Exception):
+    def __init__(self, message):
+        super(MisspelledQueryException, self).__init__(message)
+
+
 def is_okay(res):
     return res.status_code == codes.ok
 
 
 def search(query):
     res = get(PAGE % quote(query))
+    html = res.text
+
     if not is_okay(res):
-        raise NoResultException()
-    return res.text
+        bs = BeautifulSoup(html, "lxml")
+        misspelled = bs.find('div', class_="misspelled")
+
+        if misspelled is not None:
+            correction_header = misspelled.find('div', class_="heading-row")
+            correction = str(correction_header.find('a').text).strip()
+            raise MisspelledQueryException(correction)
+
+    return html
 
 
 def find_synonyms(html):
     bs = BeautifulSoup(html, "lxml")
+
+    if bs.find('div', class_="ermsg") is not None:
+        raise NoResultException()
 
     mask = bs.find('div', class_="mask")
     synonym_groups = {}
@@ -104,6 +121,12 @@ def present_synonyms(synonym_groups, query):
 if __name__ == '__main__':
     init()
     query = get_arguments()
-    html = search(query)
-    synonym_groups = find_synonyms(html)
-    present_synonyms(synonym_groups, query)
+
+    try:
+        html = search(query)
+        synonym_groups = find_synonyms(html)
+        present_synonyms(synonym_groups, query)
+    except NoResultException:
+        print "No matching results for query: %s" % query
+    except MisspelledQueryException, e:
+        print "Did you mean %s instead of %s?, otherwise no matching results." % (e.message, query)
