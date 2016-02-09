@@ -1,5 +1,7 @@
 # clisaurus
-An unofficial commandline tool for thesaurus.com
+An unofficial command line tool for thesaurus.com
+
+![alt text](https://github.com/steffenkarlsson/clisaurus/blob/master/example.png "Example of a clisaurus request and response")
 
 ## Installation
 Clone repository:
@@ -16,3 +18,10 @@ Run setup file and install script:
 To search for synonyms on thesaurus.com run:
 
     $ clisaurus "<query>"
+
+## Missing
+* ~~No results crash~~
+* ~~Pretty exception handling~~
+* ~~Support for 'Did you mean?'~~
+* pip integration
+* Possible support for Antonyms
