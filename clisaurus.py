@@ -79,8 +79,10 @@ def find_synonyms(html):
 
     mask = bs.find('div', class_="mask")
     synonym_groups = {}
-    for tab in mask.find_all('strong', class_="ttl"):
-        synonym_groups[tab.text] = defaultdict(list)
+    for tab in mask.find_all('a', class_="pos-tab"):
+        synonym = tab.find('strong', class_="ttl").text
+        word_type = tab.find('em', class_="txt").text
+        synonym_groups["%s %s" % (word_type, synonym)] = defaultdict(list)
 
     relevancy_lists = bs.find_all('div', class_="relevancy-list")
     if relevancy_lists is None or not relevancy_lists or len(relevancy_lists) != len(synonym_groups):
