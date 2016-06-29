@@ -65,6 +65,9 @@ def search(query):
 
         if misspelled is not None:
             correction_header = misspelled.find('div', class_="heading-row")
+            if not correction_header:
+                raise NoResultException()
+
             correction = str(correction_header.find('a').text).strip()
             raise MisspelledQueryException(correction)
 
@@ -74,7 +77,7 @@ def search(query):
 def find_synonyms(html):
     bs = BeautifulSoup(html, "lxml")
 
-    if bs.find('div', class_="ermsg") is not None:
+    if bs.find('div', class_="ermsg") is not None or bs.find('li', id="words-gallery-no-results") is not None:
         raise NoResultException()
 
     mask = bs.find('div', class_="mask")
